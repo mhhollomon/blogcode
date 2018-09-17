@@ -31,15 +31,31 @@ struct keyword: x3::parser<keyword> {
             ++first; ++ kbeg;
         }
         
+        bool okay = true;
+        
         if (kbeg == kend) {
+            // Matched our target, but now must make sure
+            // nothing interesting comes afterward.
+
+            if (first != last) {
+                if (isalnum(*first)) okay = false;
+                else if (*first == '_') okay = false;
+                else okay = true;
+            }
+        } else {
+            okay = false;
+        }
+        
+        if (okay) {
             attr = m_kw;
-            return true;
         } else {
             first = save;
-            return false;
         }
+        
+        return okay;
+ 
 
-    }
+    };
     
     std::string m_kw;
 };
