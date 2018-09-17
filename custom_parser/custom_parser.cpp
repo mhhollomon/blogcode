@@ -19,7 +19,7 @@ struct keyword: x3::parser<keyword> {
     
     template<typename Iterator, typename Context, typename RContext, typename Attribute>
     bool parse(Iterator &first, Iterator const& last, Context const& context, 
-               RContext const&rcontext, Attribute& attr) const
+               RContext const& rcontext, Attribute& attr) const
     {
         Iterator save = first;
         
@@ -39,7 +39,6 @@ struct keyword: x3::parser<keyword> {
             return false;
         }
 
-        
     }
     
     std::string m_kw;
