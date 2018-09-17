@@ -7,4 +7,6 @@ link_directories(${BOOSTPATH}/lib)
 
 add_subdirectory(parse_ident)
 
-add_subdirectory(lexer)
+#add_subdirectory(lexer)
+
+add_subdirectory(custom_parser)
