@@ -1,4 +1,4 @@
 # blogcode
 Example code for posts and articles on my blog.
 
-[Code Vamping](https://codevamping.wordpress.com)
+[Code Vamping](https://www.codevamping.com)
