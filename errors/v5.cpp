@@ -9,6 +9,17 @@
 //****************************
 namespace x3 = boost::spirit::x3;
 
+// tag for the counter
+struct error_counter_tag;
+// counter functor
+template <typename Iterator>
+struct error_counter {
+    int error_count =0;
+    void operator()(Iterator const& first, Iterator const& last) {
+        error_count += 1;
+    }
+};
+
 template <typename Iterator, typename Exception, typename Context>
 struct error_reporter {
    x3::error_handler_result operator() (
@@ -62,6 +73,10 @@ template <typename Iterator, typename Exception, typename Context>
       error_reporter<Iterator, Exception, Context> er;
 
       er(first, last, x ,context);
+
+      auto& counter = x3::get<error_counter_tag>(context).get();
+
+      counter(first, last);
 
       first = x.where();
       return x3::error_handler_result::accept;
@@ -117,9 +132,17 @@ int main(int argc, char**argv)
    auto end_iter = input.cend();
 
    std::cout << "parsing : " << input << "\n";
-   bool r = x3::phrase_parse(iter, end_iter, program, x3::ascii::space);
 
-   if (iter != end_iter) {
+   using boost::spirit::x3::with;
+   auto errcnt   = error_counter<decltype(iter)>();
+   auto const parser = with<error_counter_tag>(std::ref(errcnt))
+       [ program ];
+   bool r = x3::phrase_parse(iter, end_iter, parser, x3::ascii::space);
+
+   if (errcnt.error_count > 0) {
+       std::cout << "Failed:" << errcnt.error_count << " errors occured\n";
+       return 1;
+   } else if (iter != end_iter) {
       auto distance = end_iter - iter;
       std::cout << "Failed: didn't parse everything\n";
       std::cout << "stopped " << distance << " characters from the end "
