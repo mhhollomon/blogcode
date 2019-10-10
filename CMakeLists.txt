@@ -3,6 +3,7 @@ project (BlogCode)
 
 add_subdirectory(parse_ident)
 add_subdirectory(custom_parser)
+add_subdirectory(lexer)
 add_subdirectory(errors)
 add_subdirectory(file_org)
 add_subdirectory(identifiers)
