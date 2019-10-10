@@ -11,8 +11,8 @@ file_org      | [Spirit X3 File Organization](https://www.codevamping.com/2018/1
 identifiers   | [Better Identifiers](https://www.codevamping.com/2019/10/better-identifiers/)
 
 
-CMake is used to build. If you want ot build everything, go to the to directory
-and do..
+CMake is used to build. If you want to build everything, go to the top
+directory and do..
 
 ```
 mkdir build
